@@ -1,11 +1,11 @@
-import { Chef, ProfilePictures } from "@/lib/types/store_types";
+import { Chef, ProfilePicture } from "@/lib/types/store_types";
 import axios from "axios";
 
 export const fetchChef = async (): Promise<
-  Chef & { profilePictures: ProfilePictures[] }
+  Chef & { profilePictures: ProfilePicture[] }
 > => {
   const { data } = await axios.get<
-    Chef & { profilePictures: ProfilePictures[] }
+    Chef & { profilePictures: ProfilePicture[] }
   >("/api/admin/chef");
 
   return data;
@@ -14,7 +14,7 @@ export const fetchChef = async (): Promise<
 export const createNewChef = async ({
   newChef,
 }: {
-  newChef: Chef & { profilePictures: ProfilePictures[] };
-}): Promise<Chef & { profilePictures: ProfilePictures[] }> => {
+  newChef: Chef & { profilePictures: ProfilePicture[] };
+}): Promise<Chef & { profilePictures: ProfilePicture[] }> => {
   return newChef;
 };
