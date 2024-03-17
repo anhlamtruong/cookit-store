@@ -11,11 +11,10 @@ import { Category } from "@/lib/types/store_types";
 export const revalidate = 0;
 
 const NavigationBar = () => {
-  const url = "http://localhost:3001";
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data, isLoading, error } = useAsyncDataFetcher<Category[]>(
     `${url}/api/user_store/categories`
   );
-  console.log(data);
 
   const categories = data;
   return isLoading ? (
@@ -27,7 +26,7 @@ const NavigationBar = () => {
           <Link href="/store_user" className="ml-4 flex lg:ml-0 gap-x-2">
             <p className="font-bold text-xl">STORE</p>
           </Link>
-          <MainNav data={categories!} />
+          <MainNav data={categories ?? []} />
           <NavbarActions />
         </div>
       </Container>

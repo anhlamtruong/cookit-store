@@ -157,7 +157,7 @@ export const UserSettingsForm = () => {
               <FormItem>
                 <FormLabel>Role</FormLabel>
                 <Select
-                  disabled={isPending}
+                  disabled={true}
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
@@ -170,7 +170,7 @@ export const UserSettingsForm = () => {
                   </FormControl>
                   <SelectContent>
                     {/* <SelectItem value={UserRole.ADMIN}>Admin</SelectItem> */}
-                    <SelectItem value={UserRole.CHEF}>Chef</SelectItem>
+                    {/* <SelectItem value={UserRole.CHEF}>Chef</SelectItem> */}
                     <SelectItem value={UserRole.USER}>User</SelectItem>
                   </SelectContent>
                 </Select>

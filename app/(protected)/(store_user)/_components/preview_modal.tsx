@@ -2,7 +2,7 @@
 
 import Gallery from "./gallery";
 import InfoMenu from "./info_menu";
-import Modal from "./ui/menu_modal";
+import { MenuModal } from "./ui/menu_modal";
 import usePreviewModal from "@/hooks/store/user/use_preview_modal";
 
 const PreviewModal = () => {
@@ -14,7 +14,7 @@ const PreviewModal = () => {
   }
 
   return (
-    <Modal open={previewModal.isOpen} onClose={previewModal.onClose}>
+    <MenuModal open={previewModal.isOpen} onClose={previewModal.onClose}>
       <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
         <div className="sm:col-span-4 lg:col-span-5">
           <Gallery images={menu.images} />
@@ -23,7 +23,7 @@ const PreviewModal = () => {
           <InfoMenu data={menu} />
         </div>
       </div>
-    </Modal>
+    </MenuModal>
   );
 };
 

@@ -13,7 +13,6 @@ import {
   Billboard as BillboardProp,
 } from "@/lib/types/store_types";
 import useAsyncDataFetcher from "@/hooks/store/useAsyncDataFetcher";
-import useOrigin from "@/hooks/store/use_origin";
 import qs from "query-string";
 import MobileFilters from "./_component/mobile_filter";
 import Filter from "./_component/filter";
@@ -33,7 +32,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   params,
   searchParams,
 }) => {
-  const url = "http://localhost:3001";
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const storeUrl = `${url}/api/user_store/menus`;
   const categoryUrl = `${url}/api/user_store/categories/${params.categoryId}`;
   const sizesUrl = `${url}/api/user_store/sizes`;
@@ -58,7 +57,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({
   ) : (
     <div className="bg-white">
       <Container>
-        <Billboard data={categoryData?.billboard!} />
+        <Billboard data={categoryData?.billboard} />
         <div className="px-4 sm:px-6 lg:px-8 pb-24">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
             <MobileFilters sizes={sizesData ?? []} />

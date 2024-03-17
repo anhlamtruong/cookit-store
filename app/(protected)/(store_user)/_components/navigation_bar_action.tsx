@@ -1,5 +1,6 @@
 "use client";
 
+import { UserButton } from "@/components/auth/user_button";
 import { Button } from "@/components/ui/button";
 import useCart from "@/hooks/store/user/user_cart";
 import { ShoppingCart } from "lucide-react";
@@ -31,6 +32,7 @@ const NavbarActions = () => {
           {totalItemsCount()}
         </span>
       </Button>
+      <UserButton></UserButton>
     </div>
   );
 };

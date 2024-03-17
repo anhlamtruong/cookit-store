@@ -27,7 +27,7 @@ import {
   Size,
 } from "@/lib/types/store_types";
 function StorePage({ params }: { params: { storeId: string } }) {
-  const url = "http://localhost:3001";
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data, isLoading } = useAsyncDataFetcher<
     Store & {
       billboards: BillboardProps[];

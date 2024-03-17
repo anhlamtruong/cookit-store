@@ -21,7 +21,7 @@ interface MenuPageProps {
 }
 
 const MenuPage: React.FC<MenuPageProps> = ({ params }) => {
-  const url = "http://localhost:3001";
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data, isLoading } = useAsyncDataFetcher<
     Menu & { images: Image[]; category: Category; size: Size }
   >(`${url}/api/user_store/menus/${params.menuId}`);

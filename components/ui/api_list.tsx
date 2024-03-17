@@ -15,7 +15,7 @@ export const ApiList: React.FC<ApiListProps> = ({
   entityIdName,
 }) => {
   const params = useParams();
-  const origin = "http://localhost:3001";
+  const origin = process.env.NEXT_PUBLIC_API_URL;
 
   const baseUrl = `${origin}/api/admin/${params.storeId}`;
 

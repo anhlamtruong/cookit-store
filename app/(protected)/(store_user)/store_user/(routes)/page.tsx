@@ -19,8 +19,9 @@ import { format } from "date-fns";
 import StoreCardContent from "../../_components/ui/store_card_content";
 import { useRouter } from "next/navigation";
 import { Store } from "@/lib/types/store_types";
+
 const MainStoreUserPage: React.FC = ({}) => {
-  const url = "http://localhost:3001";
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const { data, isLoading } = useAsyncDataFetcher<Store[]>(
     `${url}/api/user_store/stores`

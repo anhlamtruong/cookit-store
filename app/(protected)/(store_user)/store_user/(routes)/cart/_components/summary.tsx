@@ -1,25 +1,26 @@
 "use client";
 
-import axios from "axios";
-import { ChangeEventHandler, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import axios, { AxiosError } from "axios";
+import { MouseEventHandler, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
 import useCart from "@/hooks/store/user/user_cart";
 import Currency from "@/app/(protected)/(store_user)/_components/ui/currency";
 import { Button } from "@/components/ui/button";
-import useOrigin from "@/hooks/store/use_origin";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MoonLoader } from "react-spinners";
 import { OrdersAccumulator } from "@/lib/types/cart_types";
-import { number } from "zod";
+import { useAuthModal } from "@/app/auth/(hooks)/useAuthModal";
+import { useCurrentUser } from "@/hooks/authenticate/use_current_user";
 
 const Summary = () => {
-  // const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
+  const authModal = useAuthModal();
+  const user = useCurrentUser();
   const removeAll = useCart((state) => state.removeAll);
-  const url = "http://localhost:3001";
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
@@ -32,7 +33,9 @@ const Summary = () => {
     return total + Number(item.price) * Number(item?.quantity ?? 1);
   }, 0);
 
-  const onCheckout = async () => {
+  const onCheckout: MouseEventHandler<HTMLButtonElement> = async (event) => {
+    event.stopPropagation();
+
     setLoading(true);
     try {
       // Correctly type the accumulator using OrdersAccumulator
@@ -58,6 +61,7 @@ const Summary = () => {
 
       const res = await axios.post(`${url}/api/user_store/checkout`, {
         orders: ordersArray,
+        userId: user?.id,
       });
 
       if (res.status === 200) {
@@ -70,9 +74,18 @@ const Summary = () => {
         toast.warning(res.statusText);
       }
     } catch (error) {
-      toast.warning(
-        "Something went wrong 😢, Please refresh the page and try again"
-      );
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response) {
+        if (axiosError.response.status === 401) {
+          authModal.onOpen();
+          toast.warning("Please login and try again");
+        }
+      } else {
+        toast.warning(
+          "Something went wrong 😢, Please refresh the page and try again"
+        );
+      }
     } finally {
       setLoading(false);
     }
